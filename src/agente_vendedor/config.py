@@ -10,14 +10,12 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-def cargar_env_local(ruta: str | Path = ".env") -> bool:
-    """Carga un archivo `.env` sencillo (CLAVE=valor) sin pisar variables ya definidas.
-
-    Devuelve True si el archivo existía. Soporta comentarios (`#`) y valores entre comillas.
-    """
+def leer_env(ruta: str | Path = ".env") -> dict[str, str]:
+    """Lee un archivo `.env` sencillo (CLAVE=valor). Soporta comentarios (`#`) y valores entre comillas."""
     ruta = Path(ruta)
     if not ruta.is_file():
-        return False
+        return {}
+    valores: dict[str, str] = {}
     for linea in ruta.read_text(encoding="utf-8").splitlines():
         linea = linea.strip()
         if not linea or linea.startswith("#") or "=" not in linea:
@@ -28,6 +26,15 @@ def cargar_env_local(ruta: str | Path = ".env") -> bool:
             valor = valor[1:-1]
         elif " #" in valor:
             valor = valor.split(" #", 1)[0].strip()
+        valores[clave] = valor
+    return valores
+
+
+def cargar_env_local(ruta: str | Path = ".env") -> bool:
+    """Carga el `.env` en el entorno sin pisar variables ya definidas. Devuelve True si el archivo existía."""
+    if not Path(ruta).is_file():
+        return False
+    for clave, valor in leer_env(ruta).items():
         os.environ.setdefault(clave, valor)
     return True
 
@@ -68,6 +75,7 @@ class Config:
     contexto_ttl_seg: int = 86400
     # Google Sheets / Drive
     google_credentials_file: str = "credentials.json"
+    google_credentials_json: str = ""  # contenido del JSON (alternativa al archivo, p. ej. desde Secrets Manager)
     spreadsheet_id: str = ""
     hoja_inventario: str = "inventario"
     hoja_ventas: str = "registro_ventas"
@@ -95,6 +103,7 @@ class Config:
             dynamodb_tabla=_texto("DYNAMODB_TABLA", cls.dynamodb_tabla),
             contexto_ttl_seg=_entero("CONTEXTO_TTL_SEG", cls.contexto_ttl_seg),
             google_credentials_file=_texto("GOOGLE_CREDENTIALS_FILE", cls.google_credentials_file),
+            google_credentials_json=_texto("GOOGLE_CREDENTIALS_JSON"),
             spreadsheet_id=_texto("SPREADSHEET_ID"),
             hoja_inventario=_texto("HOJA_INVENTARIO", cls.hoja_inventario),
             hoja_ventas=_texto("HOJA_VENTAS", cls.hoja_ventas),

@@ -1,0 +1,18 @@
+# Nada de secretos ni archivos locales dentro de la imagen
+.env
+credentials.json
+*.pem
+.git/
+.venv/
+venv/
+_respaldo_original/
+.vscode/
+.claude/
+build/
+dist/
+**/__pycache__/
+.pytest_cache/
+.coverage
+tests/
+fixtures/
+docs/

@@ -13,11 +13,13 @@ from mangum import Mangum
 
 from .config import Config
 from .dependencias import crear_dependencias_produccion
+from .secretos import cargar_secretos_aws
 from .server import crear_app
 
 logging.getLogger().setLevel(os.environ.get("LOG_LEVEL", "INFO"))
 log = logging.getLogger(__name__)
 
+cargar_secretos_aws()  # solo actúa si SECRETO_ID está definida (solución de pago)
 config = Config.desde_entorno()
 if faltan := config.faltantes():
     log.error("🚨 Faltan variables de entorno: %s", ", ".join(faltan))

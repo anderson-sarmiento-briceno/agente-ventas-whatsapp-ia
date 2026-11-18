@@ -1,6 +1,7 @@
 """Tienda sobre Google Sheets (inventario y registro de ventas) y Google Drive (fotos, videos, catálogo)."""
 from __future__ import annotations
 
+import json
 import logging
 import re
 import time
@@ -53,6 +54,9 @@ class TiendaGoogle:
     def _credenciales(self):
         from google.oauth2.service_account import Credentials
 
+        if self._config.google_credentials_json:  # JSON en variable/secreto: no hace falta el archivo
+            info = json.loads(self._config.google_credentials_json)
+            return Credentials.from_service_account_info(info, scopes=SCOPES)
         return Credentials.from_service_account_file(self._config.google_credentials_file, scopes=SCOPES)
 
     def libro(self):

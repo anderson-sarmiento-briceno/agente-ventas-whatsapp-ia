@@ -11,9 +11,9 @@
 ![WhatsApp](https://img.shields.io/badge/WhatsApp_Cloud_API-25D366?style=flat-square&logo=whatsapp&logoColor=white)
 ![Google Sheets](https://img.shields.io/badge/Google_Sheets-34A853?style=flat-square&logo=googlesheets&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-3-000000?style=flat-square&logo=flask&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-171_passing-2ea44f?style=flat-square&logo=pytest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-180_passing-2ea44f?style=flat-square&logo=pytest&logoColor=white)
 
-[Planeación](docs/PLANEACION.md) · [Contexto](docs/CONTEXTO.md) · [Arquitectura](docs/ARQUITECTURA.md) · [Proceso de venta](src/agente_vendedor/knowledge/proceso-ventas.md) · [Conocimiento del negocio](src/agente_vendedor/knowledge/negocio.md)
+[Planeación](docs/PLANEACION.md) · [Contexto](docs/CONTEXTO.md) · [Arquitectura](docs/ARQUITECTURA.md) · [Despliegue AWS](docs/DESPLIEGUE-AWS-LAMBDA.md) · [Proceso de venta](src/agente_vendedor/knowledge/proceso-ventas.md) · [Conocimiento del negocio](src/agente_vendedor/knowledge/negocio.md)
 
 </div>
 
@@ -105,10 +105,11 @@ stateDiagram-v2
 │   ├── contexto/              # AlmacenContexto: dynamodb · memoria
 │   └── tienda/                # Tienda: google · memoria
 ├── .claude/skills/            # skills para Claude Code (desarrollo y negocio)
-├── docs/                      # PLANEACION.md · CONTEXTO.md · ARQUITECTURA.md
-├── tests/                     # 171 tests, sin red ni claves
+├── docs/                      # PLANEACION · CONTEXTO · ARQUITECTURA · DESPLIEGUE-AWS-LAMBDA
+├── Dockerfile                 # imagen para Lambda (plan de pago)
+├── tests/                     # 180 tests, sin red ni claves
 ├── fixtures/                  # inventario, Drive y webhooks de ejemplo
-├── scripts/                   # empaquetar_lambda · verificar_config · generar_skill
+├── scripts/                   # empaquetar_lambda · env_a_aws · verificar_config · generar_skill
 └── demo.py                    # conversación en consola
 ```
 
@@ -128,7 +129,7 @@ cp .env.example .env              # completar ANTHROPIC_API_KEY y demás valores
 ### 🧪 Tests (no requieren claves)
 
 ```bash
-pytest            # 171 tests
+pytest            # 180 tests
 pytest --cov      # con cobertura
 ```
 
@@ -151,6 +152,10 @@ python scripts/verificar_config.py --online   # además se conecta a Google Shee
 ---
 
 ## ☁️ Despliegue en AWS Lambda
+
+> 📘 **Guía completa paso a paso (Ubuntu + Docker):** [docs/DESPLIEGUE-AWS-LAMBDA.md](docs/DESPLIEGUE-AWS-LAMBDA.md), con dos soluciones: **plan gratuito** (Function URL + zip, ~22.000 conversaciones/mes gratis) y **plan de pago** (API Gateway + imagen Docker en ECR + Secrets Manager).
+
+Resumen rápido:
 
 1. **Empaquetar** (desde cualquier sistema operativo; descarga wheels de Linux):
    ```bash
