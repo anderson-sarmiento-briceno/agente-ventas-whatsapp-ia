@@ -1,0 +1,6 @@
+[
+  { "id": "drv-gpmr-ficha", "name": "GPMR01-ficha.pdf", "mimeType": "application/pdf" },
+  { "id": "drv-gpmr-video", "name": "GPMR01-video.mp4", "mimeType": "video/mp4" },
+  { "id": "drv-gpmr-foto", "name": "GPMR01-frente.jpg", "mimeType": "image/jpeg" },
+  { "id": "drv-cint-foto", "name": "CINT01-lateral.jpg", "mimeType": "image/jpeg" }
+]

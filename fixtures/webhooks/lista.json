@@ -1,0 +1,25 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "000000000000000",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "messages": [
+              {
+                "from": "573000000001",
+                "id": "wamid.TEST2",
+                "timestamp": "1700000000",
+                "type": "interactive",
+                "interactive": { "type": "list_reply", "list_reply": { "id": "op-1", "title": "Casco integral" } }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "000000000000000",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "statuses": [{ "id": "wamid.TEST1", "status": "delivered", "timestamp": "1700000001", "recipient_id": "573000000001" }]
+          }
+        }
+      ]
+    }
+  ]
+}

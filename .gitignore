@@ -1,0 +1,26 @@
+# Secretos (NUNCA se suben al repositorio)
+.env
+credentials.json
+*.pem
+
+# Entornos y cachés de Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generado por scripts/empaquetar_lambda.py
+build/
+dist/
+*.zip
+
+# Material local / versión anterior
+_respaldo_original/
+.vscode/
+.claude/settings.local.json
+.claude/projects/
+*.log
+.DS_Store

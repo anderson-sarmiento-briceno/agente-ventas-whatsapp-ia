@@ -1,0 +1,10 @@
+[
+  { "numero": "GPMR01", "servicio": "Guantes protección moto rojos talla M", "unidades": "5", "precio": "45000", "descripcion": "Guantes con protección en nudillos, transpirables." },
+  { "numero": "GPMN01", "servicio": "Guantes protección moto negros talla L", "unidades": "3", "precio": "45000", "descripcion": "Guantes negros con palma reforzada." },
+  { "numero": "CINT01", "servicio": "Casco integral negro mate", "unidades": "2", "precio": "280.000", "descripcion": "Casco integral certificado, visor antiempañante." },
+  { "numero": "CABT01", "servicio": "Casco abatible blanco", "unidades": "0", "precio": "350000", "descripcion": "Casco abatible con doble visor." },
+  { "numero": "ESRE01", "servicio": "Espejos retrovisores redondos", "unidades": "10", "precio": "35000", "descripcion": "Par de espejos universales." },
+  { "numero": "CHIM01", "servicio": "Chaqueta impermeable para moto", "unidades": "4", "precio": "220000", "descripcion": "Chaqueta con protecciones removibles." },
+  { "numero": "RODI01", "servicio": "Rodilleras para moto negras", "unidades": "6", "precio": "60000", "descripcion": "Rodilleras articuladas con correas ajustables." },
+  { "numero": "IMPE01", "servicio": "Impermeable dos piezas talla M", "unidades": "", "precio": "90000", "descripcion": "Traje impermeable pantalón y chaqueta." }
+]

@@ -1,0 +1,21 @@
+[project]
+name = "agente-ventas-whatsapp-ia"
+version = "2.0.0"
+description = "Agente de ventas por WhatsApp con IA (Claude): busca productos en el inventario, toma pedidos y cierra ventas"
+authors = [{ name = "Anderson Sarmiento Briceño" }]
+requires-python = ">=3.11"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::UserWarning:fuzzywuzzy.*"]
+
+[tool.coverage.run]
+source = ["src/agente_vendedor"]
+omit = ["src/agente_vendedor/lambda_handler.py"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"

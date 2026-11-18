@@ -1,0 +1,19 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "000000000000000",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "messages": [
+              { "from": "573000000001", "id": "wamid.TEST3", "timestamp": "1700000000", "type": "image", "image": { "id": "media-1", "mime_type": "image/jpeg" } }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
