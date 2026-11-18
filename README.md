@@ -151,21 +151,48 @@ python scripts/verificar_config.py --online   # además se conecta a Google Shee
 
 ---
 
-## ☁️ Despliegue en AWS Lambda
+## ☁️ Producción en AWS
 
-> 📘 **Guía completa paso a paso (Ubuntu + Docker):** [docs/DESPLIEGUE-AWS-LAMBDA.md](docs/DESPLIEGUE-AWS-LAMBDA.md), con dos soluciones: **plan gratuito** (Function URL + zip, ~22.000 conversaciones/mes gratis) y **plan de pago** (API Gateway + imagen Docker en ECR + Secrets Manager).
+El agente corre **sin servidores que administrar**: AWS Lambda lo ejecuta solo cuando llega un mensaje de WhatsApp y cobra únicamente por ese tiempo. Hay dos formas de desplegarlo, según el volumen:
 
-Resumen rápido:
+```mermaid
+flowchart LR
+    DEV[💻 Ubuntu + Docker] -->|1 · construir| PKG[📦 zip o imagen Docker]
+    PKG -->|2 · subir| LAM
+    subgraph AWS["☁️ AWS"]
+        IN[🌐 Entrada HTTPS<br/>Function URL o API Gateway] --> LAM[⚙️ Lambda<br/>el agente]
+        LAM <--> DDB[(🗄️ DynamoDB<br/>conversaciones)]
+        SEC[🔐 Claves<br/>variables o Secrets Manager] --> LAM
+        LAM --> CW[📈 CloudWatch<br/>logs y alarmas]
+    end
+    WA[📱 WhatsApp] -->|3 · webhook| IN
+    LAM --> EXT[🧠 Claude · 📊 Google Sheets]
 
-1. **Empaquetar** (desde cualquier sistema operativo; descarga wheels de Linux):
-   ```bash
-   python scripts/empaquetar_lambda.py          # x86_64   (--arm64 para Graviton)
-   ```
-2. **Subir** `dist/lambda.zip` a una función con runtime **Python 3.11**.
-3. **Handler:** `agente_vendedor.lambda_handler.handler`
-4. **Variables de entorno:** las de [`.env.example`](.env.example) (`LLM_PROVIDER=anthropic`, `ANTHROPIC_API_KEY`, WhatsApp, Google…).
-5. **Permisos:** el rol necesita `dynamodb:GetItem`, `PutItem` y `DeleteItem` sobre `contexto_bot_will` (TTL en `expire_at`).
-6. **Webhook:** registra la URL de la función en Meta con tu `WHATSAPP_VERIFY_TOKEN`.
+    classDef aws fill:#FFF3E0,stroke:#E65100,color:#BF360C
+    classDef ext fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
+    class IN,LAM,DDB,SEC,CW aws
+    class DEV,PKG,WA,EXT ext
+```
+
+| Herramienta de AWS | Para qué se usa | 🆓 Plan gratuito | 💳 Plan de pago |
+|---|---|:-:|:-:|
+| **Lambda** | Ejecuta el agente con cada mensaje | ✅ zip | ✅ imagen Docker |
+| **Function URL** | Dirección HTTPS pública para el webhook, sin costo | ✅ | |
+| **API Gateway** | Dirección HTTPS con límite de peticiones por segundo | | ✅ |
+| **ECR** | Guarda las imágenes Docker y sus versiones | | ✅ |
+| **DynamoDB** | Recuerda en qué paso va cada cliente (24 h) | ✅ capacidad fija | ✅ bajo demanda |
+| **Secrets Manager** | Guarda las claves cifradas, fuera de la Lambda | | ✅ |
+| **IAM** | Permisos mínimos: la Lambda solo accede a su tabla y su secreto | ✅ | ✅ |
+| **CloudWatch** | Logs, métricas y alarma de errores | ✅ logs | ✅ logs + alarmas |
+| **SNS** | Envía las alertas por correo | | ✅ |
+| **Budgets** | Avisa si el gasto del mes supera un tope | ✅ | ✅ |
+
+**¿Cuál elegir?**
+- 🆓 **Plan gratuito:** USD 0 en AWS hasta ~**22.000 conversaciones al mes**. Ideal para empezar.
+- 💳 **Plan de pago:** ~**USD 7 al mes** con 50.000 conversaciones, con claves en Secrets Manager, límite de peticiones y alertas.
+- Se puede pasar del gratuito al de pago en cualquier momento sin perder conversaciones. El costo de Claude va aparte (~USD 0,0008 por conversación).
+
+> 📘 **Todos los pasos y comandos** (desde Ubuntu con Docker, explicados uno por uno): **[docs/DESPLIEGUE-AWS-LAMBDA.md](docs/DESPLIEGUE-AWS-LAMBDA.md)**
 
 ---
 
