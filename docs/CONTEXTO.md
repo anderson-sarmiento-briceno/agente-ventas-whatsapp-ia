@@ -1,6 +1,7 @@
 # Contexto del proyecto
 
 > Documento vivo para quien llega al repositorio (persona o agente de IA): qué es el sistema, por qué está construido así, qué reglas no se negocian y qué queda pendiente.
+> Las preguntas de planeación (problema, modelo, supuestos, riesgos, métricas) están en [PLANEACION.md](PLANEACION.md).
 
 ## 1. Qué es
 **Agente de ventas por WhatsApp con IA** para *Accesorios MotoPro*, una tienda de accesorios para moto en Kennedy Tintal (Bogotá).

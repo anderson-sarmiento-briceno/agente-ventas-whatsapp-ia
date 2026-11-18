@@ -13,7 +13,7 @@
 ![Flask](https://img.shields.io/badge/Flask-3-000000?style=flat-square&logo=flask&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-171_passing-2ea44f?style=flat-square&logo=pytest&logoColor=white)
 
-[Contexto](docs/CONTEXTO.md) · [Arquitectura](docs/ARQUITECTURA.md) · [Proceso de venta](src/agente_vendedor/knowledge/proceso-ventas.md) · [Conocimiento del negocio](src/agente_vendedor/knowledge/negocio.md)
+[Planeación](docs/PLANEACION.md) · [Contexto](docs/CONTEXTO.md) · [Arquitectura](docs/ARQUITECTURA.md) · [Proceso de venta](src/agente_vendedor/knowledge/proceso-ventas.md) · [Conocimiento del negocio](src/agente_vendedor/knowledge/negocio.md)
 
 </div>
 
@@ -105,7 +105,7 @@ stateDiagram-v2
 │   ├── contexto/              # AlmacenContexto: dynamodb · memoria
 │   └── tienda/                # Tienda: google · memoria
 ├── .claude/skills/            # skills para Claude Code (desarrollo y negocio)
-├── docs/                      # CONTEXTO.md · ARQUITECTURA.md
+├── docs/                      # PLANEACION.md · CONTEXTO.md · ARQUITECTURA.md
 ├── tests/                     # 171 tests, sin red ni claves
 ├── fixtures/                  # inventario, Drive y webhooks de ejemplo
 ├── scripts/                   # empaquetar_lambda · verificar_config · generar_skill
