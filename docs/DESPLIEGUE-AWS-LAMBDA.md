@@ -147,6 +147,7 @@ echo "Cuenta $CUENTA en $REGION"
 ```
 
 > 🔁 **¿Ya tienes la versión 1 funcionando?** Usa **la misma región** donde está la tabla `contexto_bot_will` (`aws dynamodb list-tables --region <region>`). Esta guía crea una Lambda **nueva**: la vieja (`vendedor_asesor_will`) sigue intacta y sirve para volver atrás.
+> Antes de empezar, **anota la URL actual** del webhook (Lambda → `vendedor_asesor_will` → Configuración → URL de la función): es la que pondrás en Meta si necesitas volver a la versión 1.
 
 ---
 
@@ -555,7 +556,7 @@ En la Solución A: `git checkout <commit-anterior>`, vuelve a empaquetar y actua
 
 | Síntoma | Causa | Solución |
 |---|---|---|
-| `curl` a la URL devuelve **403 Forbidden** (Solución A) | Falta el permiso público de la URL | Repite el `add-permission` del Paso A5. En cuentas recientes AWS pide además: `aws lambda add-permission --function-name "$FUNCION" --statement-id url-invoke --action lambda:InvokeFunction --principal "*" --invoked-via-function-url` |
+| `curl` a la URL devuelve **403** con `{"Message":"Forbidden"}` (Solución A) | Falta alguno de los dos permisos públicos de la URL | Repite los dos `add-permission` del Paso A5. En la consola, Configuración → URL de la función muestra un aviso azul si falta alguno. (Un 403 con el texto `Token inválido` es normal: es el bot respondiendo a una visita sin token de Meta.) |
 | **502 / Internal Server Error** y en logs `Init failed` | La Lambda no pudo arrancar | `aws logs tail "/aws/lambda/$FUNCION" --since 10m`. Casi siempre es una variable faltante (`🚨 Faltan variables de entorno`) o el secreto no se pudo leer (permiso del Paso B4) |
 | `NoRegionError` probando la imagen en local | Docker no tiene región | Agrega `-e AWS_DEFAULT_REGION=us-east-1` (en Lambda real AWS la pone sola) |
 | Lambda rechaza la imagen: *image manifest … not supported* | Se construyó con *provenance* | Reconstruye con `--provenance=false` |
